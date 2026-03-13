@@ -1,0 +1,4 @@
+title = "Polished Off WA Gitleaks config"
+
+[extend]
+useDefault = true
