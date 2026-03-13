@@ -1,0 +1,26 @@
+{
+    "hooks": {
+        "enabled": true,
+        "path": "/hooks",
+        "token": "replace-with-webhook-token",
+        "defaultSessionKey": "main",
+        "allowRequestSessionKey": false,
+        "mappings": [
+            {
+                "id": "ghl-conversation-update",
+                "match": {
+                    "path": "ghl-conversation-update"
+                },
+                "action": "agent",
+                "wakeMode": "now",
+                "name": "Customer Replied to GHL Conversation",
+                "agentId": "ghl-hooks",
+                "sessionKey": "hook:ghl-conversation:{{payload.contact_id}}",
+                "transform": {
+                    "module": "ghl-conversation-update.mjs"
+                },
+                "messageTemplate": "REPLY_TO_GHL_CONVERSATION webhook\nReceived: {{now}}\nRequest ID: {{headers.x-request-id}}\n\nContact\n- Contact ID: {{payload.contact_id}}\n- Full Name: {{payload.full_name}}\n- Email: {{payload.email}}\n- Tags: {{payload.tags}}\n\nForm Data\n- Message: {{payload.Message}}\n- When required: {{payload.When required}}\n- Job Size: {{payload.Job Size}}\n\nLead Meta\n- Contact Source: {{payload.contact_source}}\n- Date Created: {{payload.date_created}}\n- Full Address: {{payload.full_address}}\n\nInstruction\nUse the ghl-conversation-processor skill to draft a concise, context-aware follow-up reply and MUST post it by executing /usr/bin/python3 /home/alex/.openclaw/workspace/skills/ghl-conversation-processor/scripts/post_ghl_comment.py with contact_id. Return postResult=posted only on successful API response; otherwise return postResult=failed with postError."
+            }
+        ]
+    }
+}
